@@ -1,7 +1,24 @@
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import {bootstrapApplication} from '@angular/platform-browser';
+import { provideRouter, Route } from '@angular/router';
+import { AppComponent } from './app/app.component';
+import { DetailsComponent } from './app/pages/details/details.component';
+import { HomeComponent } from './app/pages/home/home.component';
+import { provideHttpClient } from '@angular/common/http';
+const BACKEND_URL:string=''
+export const ROUTES: Route[] = [
+  { path: '',
+  redirectTo: 'home',
+  pathMatch: 'full', },
+  {path: 'home', component: HomeComponent},
+  {path: 'details/:id', component: DetailsComponent},
+  // ...
+];
 
-import { AppModule } from './app/app.module';
-
-
-platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch(err => console.error(err));
+bootstrapApplication(AppComponent,
+  {
+    providers: [
+      {provide: 'BACKEND_URL', useValue: 'https://rickandmortyapi.com/api/character'},
+      provideRouter(ROUTES),
+      provideHttpClient()
+    ]
+  });

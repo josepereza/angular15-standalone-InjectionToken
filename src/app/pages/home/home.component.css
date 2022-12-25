@@ -1,0 +1,14 @@
+.container {
+width: 90%;
+display: grid;
+grid-template-columns: repeat(auto-fit,  minmax(300px, 1fr));
+margin: auto;
+}
+.card img {
+    opacity: 0.7;
+
+}
+.card img:hover {
+    cursor: pointer;
+    opacity: 1;
+}
