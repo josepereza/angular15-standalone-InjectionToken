@@ -1,1 +1,7 @@
 <p>details works!</p>
+<div class="card" *ngIf="personaje">
+    <img src="{{personaje.image}}" width="50%" alt="">
+</div>
+<button (click)="onGoBack()" class="btn btn-primary btn-lg mt-3">
+    Back
+  </button>
