@@ -3,17 +3,51 @@
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.0.
 ## Tutorial  injection Token
 * https://www.tektutorialshub.com/angular/injection-token-in-angular/
-String token
+
+### Type Token
+
+Here the type being injected is used as the token.
+
+For Example, we would like to inject the instance of the ProductService, we will use the ProducService as the token as shown below.
+```
+providers :[{ provide: ProductService, useClass: ProductService }]
+``` 
+
+The ProductService is then injected into the component by using the following code.
+```
+class ProductComponent {
+  constructor(private productService : ProductService ) {}
+}
+ 
+``` 
+You can keep the same token (ProductService) and change the class to another implementation of the Product service. For Example in the following code, we change it to BetterProductService.
+
+``` 
+  providers: [
+    { provide: ProductService, useClass: BetterProductService },
+ 
+```
+Angular does not complain if we use the token again. In the following example token ProductService used twice. In such a situation last to register wins (BetterProductService).
+```
+  providers: [
+    { provide: ProductService, useClass: ProductService },
+    { provide: ProductService, useClass: BetterProductService }
+  ]
+ ```
+
+
+
+
+### String token
 
 You can use the Type token only if you have Type representation. But that is not the case always. Sometimes we need to inject simple string values or simple object literal, where there is no type.
 
 We can use string tokens in such a scenario.
 
-Example
-
-
+Example:
+``` 
 providers: [{ provide: 'PRODUCT_SERVICE', useClass: ProductService }]   
- 
+``` 
 
 You can then use the Inject the ProductService using the @Inject method
 
