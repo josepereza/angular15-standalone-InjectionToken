@@ -197,10 +197,8 @@ export class AppComponent {
     this.products = this.productService.getProducts();
   }
 }
- 
- 
 
-Code
+```
 
 The Injection token ensures that the tokens are always unique. Even if the two libraries use the same name for Angular DI injection system is correctly inject the right dependency. You can refer to the example application
 Reference
