@@ -1,8 +1,66 @@
 # Rickandmorty3
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.0.
-## Tutorial
+## Tutorial  injection Token
 * https://www.tektutorialshub.com/angular/injection-token-in-angular/
+String token
+
+You can use the Type token only if you have Type representation. But that is not the case always. Sometimes we need to inject simple string values or simple object literal, where there is no type.
+
+We can use string tokens in such a scenario.
+
+Example
+
+
+providers: [{ provide: 'PRODUCT_SERVICE', useClass: ProductService }]   
+ 
+
+You can then use the Inject the ProductService using the @Inject method
+
+``` 
+export class AppComponent {
+  products: Product[];
+ 
+  constructor(
+    @Inject('PRODUCT_SERVICE') private productService: ProductService
+  ) {}
+ ```
+
+Example:
+```
+ 
+  providers: [
+    { provide: 'PRODUCT_SERVICE', useClass: const CONFIG = {
+  apiUrl: 'http://my.api.com',
+  fake: true,
+  title: 'Injection Token Example'
+};
+ 
+@NgModule({
+  imports: [BrowserModule, FormsModule],
+  declarations: [AppComponent, HelloComponent],
+  bootstrap: [AppComponent],
+  providers: [
+    { provide: 'PRODUCT_SERVICE', useClass: ProductService },
+    { provide: 'USE_FAKE', useValue: true },
+    { provide: 'APIURL', useValue: 'http://SomeEndPoint.com/api' },
+    { provide: 'CONFIG', useValue: CONFIG }
+  ]
+})
+export class AppModule {}
+ 
+```
+```
+export class AppComponent {
+  products: Product[];
+ 
+  constructor(
+    @Inject('PRODUCT_SERVICE') private productService: ProductService,
+    @Inject('USE_FAKE') public fake: String,
+    @Inject('APIURL') public ApiUrl: String,
+    @Inject('CONFIG') public Config: any
+  ) {}
+ 
 ### Ejemplo de injectionToken
 Aquí tienes un ejemplo de cómo se puede utilizar una InjectionToken en una aplicación real de Angular:
 ```
