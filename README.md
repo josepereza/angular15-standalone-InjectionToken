@@ -139,7 +139,6 @@ export const APP_CONFIG = new InjectionToken<string>('');
 ```
 // app.module.ts
 
- 
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
@@ -172,7 +171,7 @@ export class AppModule {}
 ```  
 --------------------------------------------------------
 ```
-app.component.ts
+// app.component.ts
 
 import { Component, Inject } from '@angular/core';
 import { ProductService } from './product.service';
