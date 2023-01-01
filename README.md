@@ -59,8 +59,9 @@ export class AppComponent {
     @Inject('USE_FAKE') public fake: String,
     @Inject('APIURL') public ApiUrl: String,
     @Inject('CONFIG') public Config: any
-  ) {}
- 
+  ) {}
+``` 
+
 ### Ejemplo de injectionToken
 Aquí tienes un ejemplo de cómo se puede utilizar una InjectionToken en una aplicación real de Angular:
 ```
