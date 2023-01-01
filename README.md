@@ -96,6 +96,116 @@ export class AppComponent {
     @Inject('CONFIG') public Config: any
   ) {}
 ``` 
+### Creating an InjectionToken
+
+To Create an Injection Token, first, we need to import InjectionToken from @angular/core
+	
+``` 
+import { InjectionToken } from '@angular/core'; 
+ 
+```
+Create a new Injection Token APIURL from InjectionToken
+```
+export const APIURL = new InjectionToken<string>('');
+```
+
+Register it in the providers array.
+```
+providers: [ 
+{ provide: APIURL, useValue: 'http://SomeEndPoint.com/api' },
+``` 
+
+Inject it into the Component
+``` 
+export class AppComponent {
+  constructor(@Inject(APIURL) public ApiUrl: String,) { }
+}
+```
+### InjectionToken Example
+
+The following example shows how to use the Injection Token.
+	
+ ```
+ // token.ts
+ 
+import { InjectionToken } from '@angular/core';
+ 
+export const APIURL = new InjectionToken<string>('');
+export const USE_FAKE = new InjectionToken<string>('');
+export const PRODUCT_SERVICE = new InjectionToken<string>('');
+export const APP_CONFIG = new InjectionToken<string>('');
+ 
+ ```
+```
+// app.module.ts
+
+ 
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+ 
+import { AppComponent } from './app.component';
+import { HelloComponent } from './hello.component';
+import { ProductService } from './product.service';
+import { BetterProductService } from './better-product.service';
+import { PRODUCT_SERVICE, USE_FAKE, APIURL, APP_CONFIG } from './tokens';
+ 
+const CONFIG = {
+  apiUrl: 'http://my.api.com',
+  fake: true,
+  title: 'Injection Token Example'
+};
+ 
+@NgModule({
+  imports: [BrowserModule, FormsModule],
+  declarations: [AppComponent, HelloComponent],
+  bootstrap: [AppComponent],
+  providers: [
+    { provide: PRODUCT_SERVICE, useClass: ProductService },
+    { provide: USE_FAKE, useValue: true },
+    { provide: APIURL, useValue: 'http://SomeEndPoint.com/api' },
+    { provide: APP_CONFIG, useValue: CONFIG }
+  ]
+})
+export class AppModule {}
+ 
+```  
+--------------------------------------------------------
+```
+app.component.ts
+
+import { Component, Inject } from '@angular/core';
+import { ProductService } from './product.service';
+import { Product } from './product';
+import { PRODUCT_SERVICE, USE_FAKE, APIURL, APP_CONFIG } from './tokens';
+ 
+@Component({
+  selector: 'my-app',
+  templateUrl: './app.component.html',
+  providers: []
+})
+export class AppComponent {
+  products: Product[];
+ 
+  constructor(
+    @Inject(PRODUCT_SERVICE) private productService: ProductService,
+    @Inject(USE_FAKE) public fake: String,
+    @Inject(APIURL) public ApiUrl: String,
+    @Inject(APP_CONFIG) public Config: any
+  ) {}
+ 
+  getProducts() {
+    this.products = this.productService.getProducts();
+  }
+}
+ 
+ 
+
+Code
+
+The Injection token ensures that the tokens are always unique. Even if the two libraries use the same name for Angular DI injection system is correctly inject the right dependency. You can refer to the example application
+Reference
+
 
 ### Ejemplo de injectionToken
 Aquí tienes un ejemplo de cómo se puede utilizar una InjectionToken en una aplicación real de Angular:
