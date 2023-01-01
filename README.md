@@ -126,7 +126,7 @@ export class AppComponent {
 The following example shows how to use the Injection Token.
 	
  ```
- // token.ts
+ // tokens.ts
  
 import { InjectionToken } from '@angular/core';
  
