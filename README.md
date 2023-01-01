@@ -50,6 +50,7 @@ Example:
 export class AppModule {}
  
 ```
+------------------------------------------------------------
 ```
 export class AppComponent {
   products: Product[];
