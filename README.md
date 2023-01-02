@@ -5,6 +5,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 * https://www.tektutorialshub.com/angular/injection-token-in-angular/
 * https://www.youtube.com/watch?v=P6m3H5jJMWk
 * https://country-code.ghost.io/angular-injection-token-use-cases/
+* https://medium.com/ngconf/configure-your-angular-apps-with-an-injection-token-be16eee59c40
 
 ### Type Token
 
