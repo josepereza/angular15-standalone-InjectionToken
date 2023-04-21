@@ -132,7 +132,7 @@ The Angular Dependency Injection provides several types of providers.
 Use the Class Provider useClass, when you want to provide an instance of the provided class.
 
 The useClass expects us to provide a type. The Injector creates a new instance from the type and injects it. It is similar to calling the new operator and returning instance. If the type requires any constructor parameters, the injector will resolve that also.
-UseClass Example
+### UseClass Example
 
 	
  ```
@@ -290,6 +290,8 @@ In the last option, we need to tell the Injector how to inject the dependencies 
 ``` 
 deps: ['USE_FAKE', LoggerService]
 ```
+![image](UseFactory-Provider-example.jpg)
+
 The above example can also be written as follows.
 
 ``` 
