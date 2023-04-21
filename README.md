@@ -31,8 +31,7 @@ To Provide an instance of the dependency, we need to register it in the Provider
 In our last tutorial on Angular Dependency injection, we registered our ProductService using the Providers arrays as shown below in the @NgModule
 
 ```
- 
-providers: [ProductService]
+ providers: [ProductService]
  ```
 
 The above is an actual shorthand notation for the following syntax
@@ -58,25 +57,18 @@ The DI Token can be either type, a string or an instance of InjectionToken.
 Here the type being injected is used as the token.
 
 For Example, we would like to inject the instance of the ProductService, we will use the ProducService as the token as shown below
-1
-2
-3
-	
+``` 
  
 providers :[{ provide: ProductService, useClass: ProductService }]
+``` 
  
 
 The ProductService is then injected to the component by using the following code.
-1
-2
-3
-4
-5
-	
- 
+``` 
 class ProductComponent {
   constructor(private productService : ProductService ) {}
 }
+
  
 ### String token
 
