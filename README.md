@@ -202,7 +202,45 @@ export class AppComponent {
 }
 
 ```
+----------------------------------------------------------------------------
 
+```
+// app.component.html
+
+<div class="container">
+  <h1 class="heading"><strong>Angular Services </strong>Demo</h1>
+
+  {{ApiUrl}} <br />
+  {{fake}}<br />
+  CONFIG Api: {{Config.apiUrl}} Fake: {{Config.fake}} Title: {{Config.title}}
+  <br />
+  <button type="button" (click)="getProducts()">Get Products</button>
+
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of products;">
+          <td>{{product.productID}}</td>
+          <td>{{product.name}}</td>
+          <td>{{product.price}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<br /><br /><br /><br /><br /><br />
+Read More
+<a href="https://www.tektutorialshub.com/angular/injection-token-in-angular/">Injection Token</a>
+
+```
 The Injection token ensures that the tokens are always unique. Even if the two libraries use the same name for Angular DI injection system is correctly inject the right dependency. You can refer to the example application
 Reference
 
