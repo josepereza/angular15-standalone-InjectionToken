@@ -290,7 +290,7 @@ In the last option, we need to tell the Injector how to inject the dependencies 
 ``` 
 deps: ['USE_FAKE', LoggerService]
 ```
-![image](UseFactory-Provider-example.jpg)
+![image](UseFactory-Provider-Example.jpg)
 
 The above example can also be written as follows.
 
