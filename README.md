@@ -76,69 +76,47 @@ class ProductComponent {
 Instead of using a type, we can use a string literal to register the dependency. This is useful in scenarios where the dependency is a value or object etc, which is not represented by a class.
 
 Example
-1
-2
-3
-4
-5
-	
- 
+
+``` 
  {provide:'PRODUCT_SERVICE', useClass: ProductService }, 
  {provide:'USE_FAKE', useValue: true },   
  {provide:'APIURL', useValue: 'http://SomeEndPoint.com/api' },    
- 
+ ```
 
 You can then use the Inject the dependency using the @Inject method
-1
-2
-3
-4
-5
-6
-7
 	
- 
+``` 
 class ProductComponent {
    constructor(@Inject('PRODUCTSERVICE') private prdService:ProductService,
 @Inject('APIURL') private apiURL:string ) { 
 }
  
- 
+ ```
 ### Injection Token
 
 The Problem with the string tokens is that two developers can use the same string token at a different part of the app. You also do not have any control over the third-party modules, which may use the same token. If the token is reused, the last to register overwrites all previously registered tokens.
 
 The Angular provides InjectionToken class so as to ensure that the Unique tokens are created. The Injection Token is created by creating a new instance of the InjectionToken class.
-1
-2
-3
 	
- 
+``` 
 export const API_URL= new InjectionToken<string>(''); 
  
-
+```
 Register the token in the providers array.
-1
-2
-3
-4
-5
+
 	
- 
+``` 
 providers: [ 
     { provide: API_URL, useValue: 'http://SomeEndPoint.com/api' }
 ]
- 
+ ```
 
 It is then injected using the @Inject in the constructor of the service/component.
-1
-2
-3
-4
-	
+```	
  
 constructor(@Inject(API_URL) private apiURL: string) { 
 }
+```
  
 ### The Types of Provider 
 
@@ -149,137 +127,98 @@ The Angular Dependency Injection provides several types of providers.
     Factory Provider: useFactory
     Aliased Class Provider: useExisting
 
-Class Provider: useClass
+## Class Provider: useClass
 
 Use the Class Provider useClass, when you want to provide an instance of the provided class.
 
 The useClass expects us to provide a type. The Injector creates a new instance from the type and injects it. It is similar to calling the new operator and returning instance. If the type requires any constructor parameters, the injector will resolve that also.
 UseClass Example
-1
-2
-3
-	
- 
-providers :[{ provide: ProductService, useClass: ProductService }]
- 
 
-Stackblitz
+	
+ ```
+providers :[{ provide: ProductService, useClass: ProductService }]
+ ```
+
 
 In the above, example ProductService is the Token (or key) and it maps to the ProductService Class. In this case both the Class name and token name match.
 
 The Angular Provides a shortcut in cases where both token & class name matches as follows
-1
-2
-3
+
 	
- 
+``` 
 providers: [ProductService]
- 
-Switching Dependencies
+``` 
+## Switching Dependencies
 
 You can provide a mock/Fake class for Testing purposes as shown below.
-1
-2
-3
+
 	
- 
+``` 
 providers :[{ provide: ProductService, useClass: fakeProductService }]
- 
+``` 
 
 
 
 The above example shows us how easy to switch dependencies.
-Value Provider: useValue
+
+## Value Provider: useValue
 
 Use the Value Provider useValue, when you want to provide a simple value.
 
 The Angular will injects whatever provided in the useValue as it is.
 
 It is useful in scenarios like, where you want to provide API URL, application-wide configuration Option, etc
-UseValue Example
+
+### UseValue Example
 
 In the example below, we pass a boolean value using token USE_FAKE. You can check the StackBlitz for the source code
-1
-2
-3
+
 	
- 
+``` 
 providers :[ {provide:'USE_FAKE', useValue: true}]
- 
+``` 
 
 We can inject it into the AppComponent using the @Inject
-1
-2
-3
-4
-5
-6
-	
- 
+
+``` 
 export class AppComponent {
   constructor(
     @Inject('USE_FAKE') public useFake: string
   ) {}
  
-
+```
 You can pass an object. Use Object.freeze to freeze the value of the configuration, so that nobody can change it.
-1
-2
-3
-4
-5
-6
-	
+
+```	
  
 const APP_CONFIG =  Object.freeze({
   serviceURL: 'www.serviceUrl.comapi',
   IsDevleomentMode: true
 });
- 
+ ```
 
 Register it.
-1
-2
-3
-4
-5
 	
- 
+``` 
   providers: [
     { provide: 'APP_CONFIG', useValue: APP_CONFIG }
   ]
  
-
+```
 Inject it as shown below
-1
-2
-3
-4
-5
-6
-7
+
 	
- 
+``` 
 export class AppComponent {  
 constructor(
     @Inject('APP_CONFIG') public appConfig: any
   ) {}
 }
- 
-
+```
 You can also provide a function
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
+
 	
- 
+``` 
   providers: [
     {
       provide: 'FUNC',
@@ -288,20 +227,11 @@ You can also provide a function
       }
     }
   ]
- 
+ ```
 
 The Injector will inject the function as it is. You need to invoke the function someFunc() to get a value from it.
-1
-2
-3
-4
-5
-6
-7
-8
-9
 	
- 
+``` 
 export class AppComponent {
   constructor(
     @Inject('FUNC') public someFunc: any
@@ -309,35 +239,23 @@ export class AppComponent {
     console.log(someFunc());
   }
 }
- 
+``` 
 
-Stackblitz
-Factory Provider: useFactory
+
+## Factory Provider: useFactory
 
 The Factory Provider useFactory expects us to provide a function. It invokes the function and injects the returned value. We can also add optional arguments to the factory function using the deps array. The deps array specifies how to inject the arguments.
 
 We usually use the useFactory when we want to return an object based on a certain condition.
-UseFactory example
+
+### UseFactory example
 
 Consider the use case where we want to inject either ProductService or FakeProductService based on the value for USE_FAKE. Also, one of the service (ProductService ) requires another service (LoggerService). Hence we need to inject USE_FAKE & LoggerService into our factory function.
 
 You can refer to Stackblitz for the example
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
+
 	
- 
+``` 
   providers: [
     { provide: LoggerService, useClass: LoggerService },
  
@@ -350,70 +268,37 @@ You can refer to Stackblitz for the example
       deps: ['USE_FAKE', LoggerService]
     }
   ]
- 
+ ```
 
-Stackblitz
 
 We need to pass all the dependency of the as the argument to the factory function. The injector uses the deps array (third argument) to resolve the dependencies and inject them.
-1
-2
-3
+
 	
- 
+``` 
 useFactory: (USE_FAKE, LoggerService)
- 
+``` 
 
 inside the factory function, we either return FakeProductService or ProductService depending on the value of USE_FAKE
-1
-2
-3
-4
 	
- 
+``` 
 =>
    USE_FAKE ? new FakeProductService() : new ProductService(LoggerService)
- 
+``` 
 
 In the last option, we need to tell the Injector how to inject the dependencies of the Factory function itself. Note that order must be the same as that of the factory function argument.
-1
-2
-3
 	
- 
+``` 
 deps: ['USE_FAKE', LoggerService]
-
+```
 The above example can also be written as follows.
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-	
- 
+
+``` 
 export function resolveProductService(USE_FAKE, LoggerService) {
   return USE_FAKE
     ? new FakeProductService()
     : new ProductService(LoggerService);
 }
- 
+
  
  
  
@@ -428,23 +313,14 @@ export function resolveProductService(USE_FAKE, LoggerService) {
       deps: ['USE_FAKE', LoggerService]
     }
   ]
+ ```
  
- 
-useFactory Vs useValue
+## useFactory Vs useValue
 
 In the useValue example, we used the following code.
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
+
 	
- 
+``` 
   providers: [
     {
       provide: 'FUNC',
@@ -453,20 +329,11 @@ In the useValue example, we used the following code.
       }
     }
   ]
- 
+``` 
 
 The useValue returns the function as it is. You need to call the function (someFunc()) to get the value.
-1
-2
-3
-4
-5
-6
-7
-8
-9
 	
- 
+``` 
 export class AppComponent {
   constructor(
     @Inject('FUNC') public someFunc: any
@@ -474,21 +341,12 @@ export class AppComponent {
     console.log(someFunc());
   }
 }
- 
+``` 
 
 You can achieve the same with the useFactory
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
+
 	
- 
+``` 
   providers: [
     {
       provide: 'FUNC',
@@ -497,20 +355,11 @@ You can achieve the same with the useFactory
       }
     }
   ]
- 
+ ```
 
 The useFactory invokes the factory function and returns the result. Hence in the component, you will receive the value of the function and not the function itself.
-1
-2
-3
-4
-5
-6
-7
-8
-9
 	
- 
+``` 
 export class AppComponent {
   constructor(
     @Inject('FUNC') public someFunc: any
@@ -518,39 +367,30 @@ export class AppComponent {
     console.log(someFunc);
   }
 }
- 
-Aliased Provider: useExisting
+``` 
+## Aliased Provider: useExisting
 
 Use Aliased Provider useExisting when you want to use the new provider in place of the old Provider.
-UseExisting Example
-1
-2
-3
-4
-5
+### UseExisting Example
+
 	
- 
+``` 
   providers: [
     { provide: ProductService, useExisting: NewProductService },
     { provide: NewProductService, useClass: NewProductService },
- 
+``` 
 
-Stackblitz
 
 For Example, in the above example, we map the ProductService to the NewProductService token using useExisting Provider. This will return the NewProductService whenever we use the ProductService.
 
 Also, note that we need to pass the token to the useExisting and not type. The following example shows useExisting with string tokens.
-1
-2
-3
-4
-5
-	
- 
+
+``` 
   providers: [
     { provide: ProductService, useExisting: 'PRODUCT_SERVICE' },
     { provide: 'PRODUCT_SERVICE', useClass: NewProductService },
- 
+ ```
+
 Multiple Providers with the same token
 
 You can add as many dependencies to the Providers array.
@@ -558,20 +398,9 @@ You can add as many dependencies to the Providers array.
 The Injector does not complain, if you add more than one provider with the same token
 
 For example, NgModule below adds both ProductService & FakeProductService using the same token ProductService.
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
+
 	
- 
+``` 
 @NgModule({
  
   ... 
@@ -582,7 +411,7 @@ For example, NgModule below adds both ProductService & FakeProductService using 
   ]
 })
 export class AppModule {}
- 
+```
 
 In such a scenario, the last to register wins. The ProductService token always injects FakeProductService because we register it last.
 Registering the Dependency at Multiple Providers
@@ -590,18 +419,8 @@ Registering the Dependency at Multiple Providers
 You can also register a Dependency with Multiple Providers.
 
 For Example, here we register the ProductService in NgModule
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
 	
- 
+``` 
 @NgModule({
  
   ... 
@@ -610,20 +429,11 @@ For Example, here we register the ProductService in NgModule
   ]
 })
 export class AppModule {}
- 
+``` 
 
 We can also go and register it in AppComponent. In this case, AppComponent always gets the dependency registered in the component itself.
-1
-2
-3
-4
-5
-6
-7
-8
-9
 	
- 
+``` 
 @Component({
   selector: 'my-app',
   templateUrl: './app.component.html',
@@ -631,8 +441,9 @@ We can also go and register it in AppComponent. In this case, AppComponent alway
 })
 export class AppComponent {
   products: Product[];
- 
-Provider Scope
+```
+
+### Provider Scope
 
 Where you register the dependency, defines the lifetime of the dependency.
 
@@ -641,16 +452,19 @@ When we provide the service in the @ngModule of the root module or any eagerly l
 If we provide the services in the @Component, @pipe or @Directive then they are available only in that component and all of its child components
 
 The Services provided in the @ngModule of the lazy loaded module are available in that module only.
-Singleton services
+
+### Singleton services
 
 Each Injector creates a singleton object of the dependency registered by the provider.
 
 For Example, consider a service configured in @ngModule. Component A asks for the service it will get a new instance of the service. Now if Component B Asks for the same service, the injector does not create a new instance of the service, but it will reuse the already created service.
 
 But if we register the service in @ngModule and also in Component A. Component A always gets a new instance of the service. While other components gets the instance of the service registered in @ngModule.
-Summary
+### Summary
 
 We learned how to register dependencies using the Angular Providers. You can download the sample code from the Github repository.  In the next tutorial, we will learn about the Angular injector.
+
+
 ## Injection Token
 
 ### Type Token
