@@ -32,11 +32,12 @@ In our last tutorial on Angular Dependency injection, we registered our ProductS
 
 ```
  providers: [ProductService]
- ```
+
+```
 
 The above is an actual shorthand notation for the following syntax
+
 ```
- 
 providers :[{ provide: ProductService, useClass: ProductService }]
 ``` 
 The above syntax has two properties.
