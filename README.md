@@ -68,7 +68,7 @@ The ProductService is then injected to the component by using the following code
 class ProductComponent {
   constructor(private productService : ProductService ) {}
 }
-
+```
  
 ### String token
 
